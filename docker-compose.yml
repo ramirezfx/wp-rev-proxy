@@ -1,0 +1,43 @@
+version: '3.3'
+
+services:
+   rev-proxy:
+     image: nginx:latest
+     restart: always
+     volumes:
+       - ./nginx.conf:/etc/nginx/nginx.conf
+     ports:
+     - 80:80
+     depends_on:
+       - wp_srv1
+
+   db_srv1:
+     image: mysql:latest
+     volumes:
+       - db_srv1:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: ${DB1_MYSQL_ROOT_PASSWORD}
+       MYSQL_DATABASE: ${DB1_MYSQL_DATABASE}
+       MYSQL_USER: ${DB1_MYSQL_USER}
+       MYSQL_PASSWORD: ${DB1_MYSQL_PASSWORD}
+
+   wp_srv1:
+     depends_on:
+       - db_srv1
+     image: wordpress:latest
+     volumes:
+       - wp_srv1:/var/www/html
+       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+     ports:
+       - ${WP1_PORTMAPPING}
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: ${WP1_MYSQL_HOST}
+       WORDPRESS_DB_USER: ${DB1_MYSQL_USER}
+       WORDPRESS_DB_PASSWORD: ${DB1_MYSQL_PASSWORD}
+       WORDPRESS_DB_NAME: ${DB1_MYSQL_DATABASE}
+
+volumes:
+    db_srv1: {}
+    wp_srv1: {}
