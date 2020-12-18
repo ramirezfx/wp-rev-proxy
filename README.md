@@ -1,23 +1,29 @@
 # wordpress with reverse-proxy
 Get The file with
 
-git clone https://github.com/ramirezfx/wordpress.git
-
-Rename the folder to your project or domain:
-
-mv wordpress yourproject
+git clone https://github.com/ramirezfx/wp-rev-proxy.git
 
 Navigate To The Working-Directory:
 
-cd yourproject
+cd wp-rev-proxy
 
 Change The File .env to your needs (DB-NAME, DW-PWD,...)
+
+Change The File docker-compose.yml to your needs
+
+Change The File nginx.conf to your needs
+
+The config can be changed to serve multiple websites
 
 Compile/Start The Container:
 
 docker-compose up -d
 
-Point Your Browser To http://localhost:port (8080 by default) and start the installation
+Point Your Browser To http://yourhost:port (8080 by default) and start the installation
+
+If you want to reload the nginx-config do this:
+
+docker exec -it {yournginxcontainer} nginx -s reload
 
 If you use all-in-one-wp-migration, you can use this procedure to restore:
 Download and install the plugin:
