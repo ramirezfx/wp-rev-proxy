@@ -29,8 +29,6 @@ services:
      volumes:
        - wp_srv1:/var/www/html
        - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-     ports:
-       - ${WP1_PORTMAPPING}
      restart: always
      environment:
        WORDPRESS_DB_HOST: ${WP1_MYSQL_HOST}
